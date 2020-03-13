@@ -3,10 +3,13 @@ package com.example.backendservice.api;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import com.example.backendservice.model.Person;
 import com.example.backendservice.service.PersonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +30,7 @@ public class PersonController {
     }
 
     @PostMapping
-    public void addPerson(@RequestBody Person person){
+    public void addPerson(@Valid @NonNull @RequestBody Person person){
         personService.addPerson(person);
     }
 
@@ -42,13 +45,13 @@ public class PersonController {
         .orElse(null);
     }
 
-    @DeleteMapping
+    @DeleteMapping(path = "{id}")
     public void deletePersonById(@PathVariable("id") UUID id){
         personService.deletePerson(id);
     }
 
-    @PutMapping
-    public void updatePerson(@PathVariable("id") UUID id, @RequestBody Person personToUpdate){
+    @PutMapping(path = "{id}")
+    public void updatePerson(@PathVariable("id") UUID id, @Valid @NonNull @RequestBody Person personToUpdate){
         personService.updatePerson(id, personToUpdate);
     }
 }

@@ -50,9 +50,9 @@ public class FakePersonDataAccessService implements PersonDao {
         // TODO Auto-generated method stub
         return selectPersonById(id)
             .map(p -> {
-                int indexOfPersonToDelete = DB.indexOf(person);
-                if (indexOfPersonToDelete >= 0) {
-                    DB.set(indexOfPersonToDelete, person);
+                int indexOfPersonToUpdate = DB.indexOf(p);
+                if (indexOfPersonToUpdate >= 0) {
+                    DB.set(indexOfPersonToUpdate, new Person(id, person.getName()));
                     return 1;
                 }
                 return 0;
